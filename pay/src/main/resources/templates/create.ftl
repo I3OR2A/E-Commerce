@@ -8,7 +8,7 @@
 <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 <script>
 	jQuery('#myQrcode').qrcode({
-		text	: "wxpay/bizpayurl?pr=riNZ00i"
+		text	: "{codeUrl}"
 	});	
 </script>
 </body>
