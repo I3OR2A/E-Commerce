@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 @Getter
 public class UserLoginForm {
 
-    @NotBlank
+    @NotBlank // 用於 String 判斷空格
     // @NotNull
-    // @NotEmpty
+    // @NotEmpty 用於集合
     private String username;
 
     @NotBlank

@@ -56,6 +56,7 @@ public class UserController {
         return userResponseVo;
     }
 
+    // session 保存在內存裡，token+redis
     @GetMapping("/user")
     public ResponseVo<User> userInfo(HttpSession session){
         User user = (User) session.getAttribute(CURRENT_USER);
@@ -63,6 +64,22 @@ public class UserController {
             return ResponseVo.error(ResponseEnum.NEED_LOGIN);
         }
 
+        return ResponseVo.success(user);
+    }
+
+    //TOD 判斷登入狀態，攔截器
+    @PostMapping("/user/logout")
+    /**
+     * {@link org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory} getSessionTimeoutInMinutes
+     */
+    public ResponseVo logout(HttpSession session){
+        log.info("/login sessionId={}", session.getId());
+        User user = (User) session.getAttribute(CURRENT_USER);
+        if(user == null){
+            return ResponseVo.error(ResponseEnum.NEED_LOGIN);
+        }
+
+        session.removeAttribute(CURRENT_USER);
         return ResponseVo.success(user);
     }
 }

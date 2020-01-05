@@ -12,13 +12,13 @@ public class CategoryMapperTest extends MallApplicationTests {
 
     @Test
     public void findById() {
-        Category category = categoryMapper.findById(100001);
+        Category category = categoryMapper.selectByPrimaryKey(100001);
         System.out.println(category.toString());
     }
 
     @Test
     public void queryById() {
-        Category category = categoryMapper.queryById(100002);
+        Category category = categoryMapper.selectByPrimaryKey(100002);
         System.out.println(category.toString());
     }
 }
