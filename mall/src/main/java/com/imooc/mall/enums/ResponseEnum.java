@@ -29,6 +29,10 @@ public enum ResponseEnum {
     CART_PRODUCT_NOT_EXIST(15, "購物車裡無此商品"),
 
     DELETE_SHIPPING_FAIL(16, "刪除收貨地址失敗"),
+
+    SHIPPING_NOT_EXIST(17, "收貨地址不存在"),
+
+    CART_SELECTED_IS_EMPTY(17, "請選擇商品後下單"),
     ;
 
     Integer code;
