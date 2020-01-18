@@ -11,8 +11,10 @@ import com.imooc.mall.enums.ResponseEnum;
 import com.imooc.mall.pojo.*;
 import com.imooc.mall.service.ICartService;
 import com.imooc.mall.service.IOrderService;
+import com.imooc.mall.vo.OrderItemVo;
 import com.imooc.mall.vo.OrderVo;
 import com.imooc.mall.vo.ResponseVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +89,12 @@ public class OrderServiceImpl implements IOrderService {
             OrderItem orderItem = builderOrderItem(uid, orderNo, cart.getQuantity(), product);
             orderItemList.add(orderItem);
 
+            // 減庫存
+            product.setStock(product.getStock() - cart.getQuantity());
+            int row = productMapper.updateByPrimaryKeySelective(product);
+            if (row < 0) {
+                return ResponseVo.error(ResponseEnum.ERROR);
+            }
         }
 
         // 計算總價，只計算選中的商品
@@ -103,12 +111,35 @@ public class OrderServiceImpl implements IOrderService {
             return ResponseVo.error(ResponseEnum.ERROR);
         }
 
-        // 減庫存
-
         // 更新購物車 (選中的商品)
+        // Redis 有事務(打包命令)，不能回滾
+        for (Cart cart : cartList) {
+            cartService.delete(uid, cart.getProductId());
+        }
 
         // 構造 orderVo
+        OrderVo orderVo = builderOrderVo(order, orderItemList, shipping);
         return ResponseVo.success();
+    }
+
+    private OrderVo builderOrderVo(Order order, List<OrderItem> orderItemList, Shipping shipping) {
+        OrderVo orderVo = new OrderVo();
+        BeanUtils.copyProperties(order, orderVo);
+
+        List<OrderItemVo> orderItemVoList = orderItemList.stream().map(e ->
+        {
+            OrderItemVo orderItemVo = new OrderItemVo();
+            BeanUtils.copyProperties(e, orderItemVo);
+            return orderItemVo;
+        }).collect(Collectors.toList());
+        orderVo.setOrderItemVoList(orderItemVoList);
+
+        if (shipping != null) {
+            orderVo.setShippingId(shipping.getId());
+            orderVo.setShippingVo(shipping);
+        }
+
+        return orderVo;
     }
 
     private Order buildOrder(Integer uid,

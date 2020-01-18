@@ -14,7 +14,7 @@
             <property name="suppressAllComments" value="true"></property>
         </commentGenerator>
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true&amp;allowPublicKeyRetrieval=true"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -49,10 +49,13 @@
         <!--            <columnOverride column="detail" jdbcType="VARCHAR"/>-->
         <!--            <columnOverride column="sub_images" jdbcType="VARCHAR"/>-->
         <!--        </table>-->
-        <table tableName="mall_shipping" domainObjectName="Shipping" enableCountByExample="false"
+        <!--        <table tableName="mall_shipping" domainObjectName="Shipping" enableCountByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">-->
+        <!--            <columnOverride column="detail" jdbcType="VARCHAR"/>-->
+        <!--            <columnOverride column="sub_images" jdbcType="VARCHAR"/>-->
+        <!--        </table>-->
+        <table tableName="mall_pay_info" domainObjectName="PayInfo" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-            <columnOverride column="detail" jdbcType="VARCHAR"/>
-            <columnOverride column="sub_images" jdbcType="VARCHAR"/>
         </table>
 
 
