@@ -32,7 +32,11 @@ public enum ResponseEnum {
 
     SHIPPING_NOT_EXIST(17, "收貨地址不存在"),
 
-    CART_SELECTED_IS_EMPTY(17, "請選擇商品後下單"),
+    CART_SELECTED_IS_EMPTY(18, "請選擇商品後下單"),
+
+    ORDER_NOT_EXIST(19, "訂單不存在"),
+
+    ORDER_STATUS_ERROR(20, "訂單狀態有誤"),
     ;
 
     Integer code;

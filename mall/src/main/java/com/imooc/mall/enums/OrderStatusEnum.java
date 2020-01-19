@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public enum OrderStatusEnum {
 
-    CALCAELD(0, "已取消"),
+    CANCELED(0, "已取消"),
 
     NO_PAY(10, "未付款"),
 
